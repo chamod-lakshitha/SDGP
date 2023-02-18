@@ -4,7 +4,7 @@
             "outputFile": "com.example.sdgp_impl.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\User\\Desktop\\IIT\\SDGP\\New folder (2)\\SDGP\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "C:\\Users\\Chamod\\Desktop\\ex\\sdgp-impl\\SDGP\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
