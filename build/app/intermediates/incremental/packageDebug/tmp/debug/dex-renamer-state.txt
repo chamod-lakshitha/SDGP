@@ -1,4 +1,4 @@
-#Sat Feb 18 11:30:33 IST 2023
-base.0=C\:\\Users\\User\\Desktop\\IIT\\SDGP\\New folder (2)\\SDGP\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Mon Feb 20 08:39:38 IST 2023
+base.0=C\:\\Users\\Chamod\\Desktop\\ex\\sdgp-impl\\SDGP\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
