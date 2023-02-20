@@ -1,108 +1,277 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Welcome.dart';
 
 class Login extends StatefulWidget {
-    const Login({Key? key}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+  String? _email, _password;
+  String prompt = "";
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  Future<bool> _onWillPop() async {
+    return (await Navigator.pushReplacement(
+      context,
+      PageTransition(
+        child: const Welcome(),
+        type: PageTransitionType.theme,
+      ),
+    ));
+  }
+
+  setUserId(userID) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setInt("userID", userID);
+  }
+
+  Future<bool> sendLoginDetails() async {
+    try {
+      var response = await Dio().post(
+          "http://" + (dotenv.env['IPV_4'])! + ":8000/api/user/login",
+          data: {"email": _email, "password": _password});
+      if (response.data["success"]) {
+        setUserId(response.data["userID"]);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
-      body: Padding(
-        padding: const EdgeInsets.all(27),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Text(
-                  "Login",
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w100,
-                    color: Colors.teal,
-                  ),
-                ),
-    
-                Image.asset("assets/login.png"),
-               
-                const SizedBox(
-                  height: 25,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration:  InputDecoration(
-                    labelText: "Enter email",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                    
-                  ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: "Enter Password",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                    suffixIcon: Icon(Icons.remove_red_eye),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment:  MainAxisAlignment.end,
-                  children: [
-                    TextButton(onPressed: (){}, child: const Text(
-                      "Forget Password?"
-                    ))
-                  ],
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                Container(
-                  height: 60,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(70),
-                    color: Color.fromARGB(255, 0, 100, 93),
-                  ),
-                  child: MaterialButton(
-                    onPressed: (){},
-                    child: const Text(
-                      "LOGIN",
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment:  MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Are you new to medicure+?",
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.7),
-                      ),
-    
-                    ),
-                    TextButton(onPressed: (){}, child: const Text(
-                        "Register"
-                    ),),
-                  ],
-                ),
-              ],
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Login to MediCure+",
+            style: GoogleFonts.roboto(
+              textStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
           ),
+          centerTitle: true,
+          backgroundColor: const Color.fromRGBO(0, 93, 93, 1),
+          elevation: 2.5,
+        ),
+        body: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 35),
+              width: double.infinity,
+              height: 200,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/login.png"),
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 270),
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
+              width: double.infinity,
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.blueGrey[75],
+                border: const Border(
+                  bottom: BorderSide(
+                    width: 2,
+                    color: Colors.black26,
+                  ),
+                ),
+              ),
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          labelText: "Email",
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.email),
+                        ),
+                        validator: (email) {
+                          if (email == null || email.isEmpty) {
+                            return "Please enter your email";
+                          }
+                          if (!RegExp(
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(email)) {
+                            return "Please enter an valid email";
+                          }
+                          return null;
+                        },
+                        onChanged: (email) {
+                          _email = email;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        controller: _passwordController,
+                        keyboardType: TextInputType.text,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          labelText: "Password",
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.password),
+                        ),
+                        validator: (password) {
+                          if (password == null || password.isEmpty) {
+                            return "Please enter your full name";
+                          }
+                          return null;
+                        },
+                        onChanged: (password) {
+                          _password = password;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "Forgot password ?",
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.roboto(
+                          textStyle: const TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 13,
+                            color: Color.fromRGBO(0, 93, 93, 1),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 2 + 10),
+              child: Center(
+                child: Text(
+                  prompt,
+                  style: GoogleFonts.roboto(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: GestureDetector(
+                // onTap: () async {
+                //   if (_formKey.currentState!.validate()) {
+                //     bool flag = await sendLoginDetails();
+                //     if (flag) {
+                //       // ignore: use_build_context_synchronously
+                //       Navigator.pushReplacement(
+                //         context,
+                //         PageTransition(
+                //           child: Home(selectedIndex: 0),
+                //           type: PageTransitionType.leftToRight,
+                //         ),
+                //       );
+                //     } else {
+                //       // ignore: use_build_context_synchronously
+                //       ScaffoldMessenger.of(context).showSnackBar(
+                //         const SnackBar(
+                //           content: Text("Invalid Email or Password."),
+                //         ),
+                //       );
+                //     }
+                //   }
+                // },
+                child: Container(
+                  margin: const EdgeInsets.only(top: 455),
+                  color: const Color.fromRGBO(0, 93, 93, 1),
+                  height: 50,
+                  width: MediaQuery.of(context).size.width - 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white, fontSize: 17),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(
+                        Icons.app_registration_rounded,
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 550),
+              child: Center(
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   PageTransition(
+                    //     child: const Register(),
+                    //     type: PageTransitionType.leftToRight,
+                    //   ),
+                    // );
+                  },
+                  child: RichText(
+                    text: const TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Don't have an account?",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text: " Register.",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromRGBO(0, 93, 93, 1),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
