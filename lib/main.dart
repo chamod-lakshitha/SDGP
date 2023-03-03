@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CHD_Prediction(),
+      home: Login(),
       builder: EasyLoading.init(),
     );
   }
