@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/CHD_Prediction.dart';
-import 'package:flutter_application_1/Login.dart';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sdgp/BMI_Calc.dart';
+import 'Login.dart';
 import 'SplashScreen.dart';
 
 void main() async {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: BMI_Calc(),
       builder: EasyLoading.init(),
     );
   }
