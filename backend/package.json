@@ -18,6 +18,8 @@
     "python-shell": "^3.0.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.21",
+    "nodemon": "^2.0.21",
+    "supertest": "^6.3.3"
   }
 }
