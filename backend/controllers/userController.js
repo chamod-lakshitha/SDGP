@@ -19,3 +19,25 @@ exports.register = async (req, res) => {
     res.send({ success: false, alreadyRegistered: false });
   }
 };
+
+exports.login = async (req, res) => {
+    try {
+      UserModel.login(req.body.email, async (err, dbRes) => {
+        if (err) {
+          res.json({ success: false });
+        } else {
+          if (dbRes.length > 0) {
+            if (await bcrypt.compare(req.body.password, dbRes[0].password)) {
+              res.json({ success: true, userID: dbRes[0].id });
+            } else {
+              res.json({ success: false });
+            }
+          } else {
+            res.json({ success: false });
+          }
+        }
+      })
+    } catch {
+        res.json({ success: false });
+      }
+    };

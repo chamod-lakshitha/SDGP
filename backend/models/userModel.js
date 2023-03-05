@@ -33,3 +33,19 @@ User.register = (user, res) => {
     }
   );
 };
+
+User.login = (email, res) => {
+    dbConn.query(
+      'SELECT id, password FROM user_credentials WHERE email = ?',
+      [email],
+      (err, dbRes) => {
+        if ((null, err)) {
+          res(err);
+        } else {
+          res(null, dbRes);
+        }
+      }
+    );
+  };
+
+  module.exports = User;
