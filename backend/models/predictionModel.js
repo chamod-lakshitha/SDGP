@@ -27,4 +27,17 @@ Prediction.save = (prediction, res) => {
   });
 };
 
+Prediction.history = (userID, res) => {
+  dbConn.query(
+    `SELECT * FROM prediction WHERE userID = ${userID}`,
+    (err, dbRes) => {
+      if (err) {
+        res(null, err);
+      } else {
+        res(null, dbRes);
+      }
+    }
+  );
+};
+
 module.exports = Prediction;
