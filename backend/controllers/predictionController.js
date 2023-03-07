@@ -39,3 +39,13 @@ exports.predict = (req, res) => {
     res.send({ success: false });
   }
 };
+
+exports.history = (req, res) => {
+  PredictionModel.history(req.body.userID, (err, dbRes) => {
+    if (err) {
+      res.send({ success: false });
+    } else {
+      res.send({ success: true, result: dbRes });
+    }
+  });
+};
