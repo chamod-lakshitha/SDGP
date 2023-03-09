@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sdgp/BMI_Calc.dart';
 import 'package:sdgp/CHD_Prediction.dart';
+import 'package:sdgp/Home.dart';
 import 'package:sdgp/Login.dart';
 import 'package:sdgp/SplashScreen.dart';
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: Home(),
       builder: EasyLoading.init(),
     );
   }

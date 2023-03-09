@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdgp/CHD_Prediction.dart';
+import 'package:sdgp/Dashboard.dart';
 
 import 'BMI_Calc.dart';
 
@@ -15,7 +16,7 @@ class _HomeState extends State<Home> {
   int selectedIndex;
   _HomeState(this.selectedIndex);
 
-  List<Widget> screenList = const [CHD_Prediction(), BMI_Calc()];
+  List<Widget> screenList = const [DashBoard(), CHD_Prediction(), BMI_Calc()];
 
   @override
   Widget build(BuildContext context) {
