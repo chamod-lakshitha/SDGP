@@ -87,15 +87,15 @@ class _WelcomeState extends State<Welcome> {
                         style: TextStyle(color: Colors.black54),
                       ),
                       GestureDetector(
-                        // onTap: () {
-                        //   Navigator.pushReplacement(
-                        //     context,
-                        //     PageTransition(
-                        //       child: const Register(),
-                        //       type: PageTransitionType.leftToRight,
-                        //     ),
-                        //   );
-                        // },
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                              child: const Register(),
+                              type: PageTransitionType.leftToRight,
+                            ),
+                          );
+                        },
                         child: Container(
                           margin: const EdgeInsets.only(top: 25),
                           color: const Color.fromRGBO(0, 93, 93, 1),
