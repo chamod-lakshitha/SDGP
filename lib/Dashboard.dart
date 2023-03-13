@@ -306,15 +306,15 @@ class _DashBoardState extends State<DashBoard> {
                   width: 40,
                 ),
                 GestureDetector(
-                  // onTap: () {
-                  //   Navigator.push(
-                  //     context,
-                  //     PageTransition(
-                  //       child: History(),
-                  //       type: PageTransitionType.fade,
-                  //     ),
-                  //   );
-                  // },
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        child: History(),
+                        type: PageTransitionType.fade,
+                      ),
+                    );
+                  },
                   child: Container(
                     width: 130,
                     height: 160,
