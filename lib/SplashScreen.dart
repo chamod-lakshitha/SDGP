@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Home.dart';
 import 'Welcome.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -39,12 +40,12 @@ class _SplashScreenState extends State<SplashScreen> {
         }
       },
     );
-    Timer(Duration(seconds: 5), () async{
+    Timer(Duration(seconds: 5), () async {
       Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const Welcome()),
-          );
-     });
+        context,
+        MaterialPageRoute(builder: (context) => const Welcome()),
+      );
+    });
   }
 
   @override

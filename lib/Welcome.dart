@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sdgp/Login.dart';
 
+import 'Register.dart';
+
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
 
@@ -147,7 +149,7 @@ class _WelcomeState extends State<Welcome> {
                                 text: " Login",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                   color: const Color.fromRGBO(0, 93, 93, 1),
+                                  color: const Color.fromRGBO(0, 93, 93, 1),
                                 ),
                               ),
                             ],
