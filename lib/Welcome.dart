@@ -147,7 +147,7 @@ class _WelcomeState extends State<Welcome> {
                                 text: " Login",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 2, 62, 152),
+                                   color: const Color.fromRGBO(0, 93, 93, 1),
                                 ),
                               ),
                             ],
