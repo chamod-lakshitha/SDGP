@@ -150,7 +150,7 @@ class _LoginState extends State<Login> {
                         ),
                         validator: (password) {
                           if (password == null || password.isEmpty) {
-                            return "Please enter your full name";
+                            return "Please enter your password";
                           }
                           return null;
                         },
