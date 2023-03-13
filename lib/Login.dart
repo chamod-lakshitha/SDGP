@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Home.dart';
 import 'Welcome.dart';
 
 class Login extends StatefulWidget {
@@ -36,12 +37,14 @@ class _LoginState extends State<Login> {
   setUserId(userID) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setInt("userID", userID);
+    print(pref.getInt("userID"));
   }
 
   Future<bool> sendLoginDetails() async {
     try {
+      print("came");
       var response = await Dio().post(
-          "http://" + (dotenv.env['IPV_4'])! + ":8000/api/user/login",
+          (dotenv.env['server'])! + "api/user/login",
           data: {"email": _email, "password": _password});
       if (response.data["success"]) {
         setUserId(response.data["userID"]);
@@ -59,6 +62,7 @@ class _LoginState extends State<Login> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
             "Login to MediCure+",
@@ -156,14 +160,17 @@ class _LoginState extends State<Login> {
                       const SizedBox(
                         height: 15,
                       ),
-                      Text(
-                        "Forgot password ?",
-                        textAlign: TextAlign.right,
-                        style: GoogleFonts.roboto(
-                          textStyle: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 13,
-                            color: Color.fromRGBO(0, 93, 93, 1),
+                      Container(
+                        width: double.infinity - 10,
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "Forgot password ? ",
+                          style: GoogleFonts.roboto(
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13,
+                              color: Color.fromRGBO(0, 93, 93, 1),
+                            ),
                           ),
                         ),
                       ),
@@ -189,28 +196,28 @@ class _LoginState extends State<Login> {
             ),
             Center(
               child: GestureDetector(
-                // onTap: () async {
-                //   if (_formKey.currentState!.validate()) {
-                //     bool flag = await sendLoginDetails();
-                //     if (flag) {
-                //       // ignore: use_build_context_synchronously
-                //       Navigator.pushReplacement(
-                //         context,
-                //         PageTransition(
-                //           child: Home(selectedIndex: 0),
-                //           type: PageTransitionType.leftToRight,
-                //         ),
-                //       );
-                //     } else {
-                //       // ignore: use_build_context_synchronously
-                //       ScaffoldMessenger.of(context).showSnackBar(
-                //         const SnackBar(
-                //           content: Text("Invalid Email or Password."),
-                //         ),
-                //       );
-                //     }
-                //   }
-                // },
+                onTap: () async {
+                  if (_formKey.currentState!.validate()) {
+                    bool flag = await sendLoginDetails();
+                    if (flag) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                          child: Home(selectedIndex: 0),
+                          type: PageTransitionType.leftToRight,
+                        ),
+                      );
+                    } else {
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Invalid Email or Password."),
+                        ),
+                      );
+                    }
+                  }
+                },
                 child: Container(
                   margin: const EdgeInsets.only(top: 455),
                   color: const Color.fromRGBO(0, 93, 93, 1),
@@ -221,7 +228,11 @@ class _LoginState extends State<Login> {
                     children: const [
                       Text(
                         "Login",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(
                         width: 10,
@@ -239,15 +250,15 @@ class _LoginState extends State<Login> {
               margin: const EdgeInsets.only(top: 550),
               child: Center(
                 child: GestureDetector(
-                  onTap: () {
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   PageTransition(
-                    //     child: const Register(),
-                    //     type: PageTransitionType.leftToRight,
-                    //   ),
-                    // );
-                  },
+                  // onTap: () {
+                  //   Navigator.pushReplacement(
+                  //     context,
+                  //     PageTransition(
+                  //       child: const Register(),
+                  //       type: PageTransitionType.leftToRight,
+                  //     ),
+                  //   );
+                  // },
                   child: RichText(
                     text: const TextSpan(
                       children: [
