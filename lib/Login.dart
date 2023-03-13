@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Home.dart';
+import 'Register.dart';
 import 'Welcome.dart';
 
 class Login extends StatefulWidget {
@@ -250,15 +251,15 @@ class _LoginState extends State<Login> {
               margin: const EdgeInsets.only(top: 550),
               child: Center(
                 child: GestureDetector(
-                  // onTap: () {
-                  //   Navigator.pushReplacement(
-                  //     context,
-                  //     PageTransition(
-                  //       child: const Register(),
-                  //       type: PageTransitionType.leftToRight,
-                  //     ),
-                  //   );
-                  // },
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      PageTransition(
+                        child: const Register(),
+                        type: PageTransitionType.leftToRight,
+                      ),
+                    );
+                  },
                   child: RichText(
                     text: const TextSpan(
                       children: [
