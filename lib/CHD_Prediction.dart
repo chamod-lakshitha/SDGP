@@ -1,9 +1,11 @@
+import 'package:application/Result.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CHD_Prediction extends StatefulWidget {
@@ -14,8 +16,6 @@ class CHD_Prediction extends StatefulWidget {
 }
 
 class _CHD_PredictionState extends State<CHD_Prediction> {
-  bool hasSend = false;
-  bool errorResponse = false;
   String? userID;
   double? _sex,
       _age,
@@ -28,7 +28,7 @@ class _CHD_PredictionState extends State<CHD_Prediction> {
       _BMI,
       _heartRate,
       _glucose;
-  String? _predictedResult;
+  String _predictedResult = "1";
 
   final _formKey = GlobalKey<FormState>();
 
@@ -81,6 +81,7 @@ class _CHD_PredictionState extends State<CHD_Prediction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Predict CHD Risk",
@@ -123,6 +124,7 @@ class _CHD_PredictionState extends State<CHD_Prediction> {
               key: _formKey,
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       height: 10,
@@ -497,6 +499,14 @@ class _CHD_PredictionState extends State<CHD_Prediction> {
                       () {
                     EasyLoading.dismiss();
                   });
+                  // ignore: use_build_context_synchronously
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      child: Result(prediction: _predictedResult),
+                      type: PageTransitionType.leftToRight,
+                    ),
+                  );
                 } else {
                   print("hello");
                   EasyLoading.dismiss();
