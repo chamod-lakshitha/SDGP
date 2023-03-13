@@ -30,6 +30,7 @@ exports.predict = (req, res) => {
           if (err) {
             res.send({ success: false });
           } else {
+            console.log(dbRes);
             res.send({ success: true, value: resolve[0][1] });
           }
         });
