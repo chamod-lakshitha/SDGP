@@ -22,23 +22,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Timer(
-    //   const Duration(seconds: 5),
-    //   () async {
-    //     bool flag = await checkForLogin();
-    //     if (!flag) {
-    //       Navigator.pushReplacement(
-    //         context,
-    //         MaterialPageRoute(builder: (context) => const Welcome()),
-    //       );
-    //     } else {
-    //       Navigator.pushReplacement(
-    //         context,
-    //         MaterialPageRoute(builder: (context) => Home(selectedIndex: 0)),
-    //       );
-    //     }
-    //   },
-    // );
+    Timer(
+      const Duration(seconds: 5),
+      () async {
+        bool flag = await checkForLogin();
+        if (!flag) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const Welcome()),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Home(selectedIndex: 0)),
+          );
+        }
+      },
+    );
     Timer(Duration(seconds: 5), () async{
       Navigator.pushReplacement(
             context,
