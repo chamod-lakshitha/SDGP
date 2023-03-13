@@ -1,4 +1,3 @@
-import 'package:application/Result.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Result.dart';
 
 class CHD_Prediction extends StatefulWidget {
   const CHD_Prediction({Key? key}) : super(key: key);
