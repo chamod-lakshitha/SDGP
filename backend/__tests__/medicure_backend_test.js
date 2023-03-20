@@ -63,3 +63,35 @@ describe('user login with invalid email and password', () => {
     expect(res.body.success).toEqual(false);
   });
 });
+
+describe('retrieve test history', () => {
+  it("should return user's test history", async () => {
+    const res = await request(app)
+      .post('/api/chd_prediction/history')
+      .send({ userID: '2' });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.success).toEqual(true);
+  });
+});
+
+describe('retrieve test history', () => {
+  it("should return user's data rows", async () => {
+    const res = await request(app)
+      .post('/api/chd_prediction/history')
+      .send({ userID: '2' });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.success).toEqual(true);
+    expect(res.body.result.length >= 0).toBeTruthy();
+  });
+});
+
+describe('retrieve test history', () => {
+  it('should return empty list', async () => {
+    const res = await request(app)
+      .post('/api/chd_prediction/history')
+      .send({ userID: '50' });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.success).toEqual(true);
+    expect(res.body.result.length === 0).toBeTruthy();
+  });
+});
