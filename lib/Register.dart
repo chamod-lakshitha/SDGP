@@ -151,6 +151,10 @@ class _RegisterState extends State<Register> {
                         validator: (password) {
                           if (password == null || password.isEmpty) {
                             return "Please enter your password.";
+                          }else if (password.length <= 5) {
+                            return "Password is too short. Use a strong password";
+                          } else if (isAlpha(password) || isNumeric(password)) {
+                            return "Password should be a combination of numbers and letters";
                           }
                           return null;
                         },
