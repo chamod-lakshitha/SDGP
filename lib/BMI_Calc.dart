@@ -32,7 +32,7 @@ class _BMI_CalcState extends State<BMI_Calc> {
                     : Colors.red,
         alignment: Alignment.center,
         child: Text(
-          calculated ? "BMI value is : " + BMI.toString() : "",
+          calculated ? "BMI value is : " + BMI.toStringAsFixed(2) : "",
           style: GoogleFonts.roboto(
             textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
