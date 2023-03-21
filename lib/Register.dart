@@ -104,6 +104,8 @@ class _RegisterState extends State<Register> {
                         validator: (name) {
                           if (name == null || name.isEmpty) {
                             return "Please enter your full name";
+                          }else if (!isAlpha(name)) {
+                            return "Please enter your full name correctly";
                           }
                           return null;
                         },
