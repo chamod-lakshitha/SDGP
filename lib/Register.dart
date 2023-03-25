@@ -102,9 +102,11 @@ class _RegisterState extends State<Register> {
                           prefixIcon: Icon(Icons.person),
                         ),
                         validator: (name) {
+                          RegExp exp =
+                              new RegExp(r"[^a-z ]", caseSensitive: false);
                           if (name == null || name.isEmpty) {
                             return "Please enter your full name";
-                          }else if (!isAlpha(name)) {
+                          } else if (exp.allMatches(name).length != 0) {
                             return "Please enter your full name correctly";
                           }
                           return null;
